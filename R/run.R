@@ -70,7 +70,7 @@ run_benchmark <- function(.design,
                              }
 
                              # Obtain Activity with decouple and format
-                             decouple(mat = bench_env$gene_expression, network = ss_filtered,
+                             decoupleR::decouple(mat = bench_env$gene_expression, network = ss_filtered,
                                       .source = source_col, .target = all_of(target_col),
                                       statistics = stats_list, args = opts_list,
                                       include_time = TRUE)  %>%
