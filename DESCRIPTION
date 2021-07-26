@@ -1,15 +1,14 @@
 Package: decoupleRBench
-Title: What the Package Does (One Line, Title Case)
+Title: Benchmark of decoupleR methods.
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Pau",
+           family = "Badia-i-Mompel",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+           email = "pau.badia@uni-heidelberg.de",
+           comment = c(ORCID = "https://orcid.org/0000-0002-1004-3923"))
+Description: Package to benchmark methods from decoupleR.
+License: use_mit_license()
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
