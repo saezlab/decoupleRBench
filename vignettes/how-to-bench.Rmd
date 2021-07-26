@@ -144,7 +144,7 @@ The benchmark data should be in the form of a tibble with count data
 (e.g. gene expression table) with the ID of each perturbation experiment as
 column names and gene IDs as rows.
 ```{r bexpr_example}
-readRDS_helper(bexample_url, TRUE) %>%
+decoupleRBench::readRDS_helper(bexample_url, TRUE) %>%
     # show only first 10 genes of first 3 experiments
     slice_head(n = 10) %>%
     select(1:3)
