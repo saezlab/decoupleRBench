@@ -1,2 +1,2 @@
-# decoupleR_benchmark
+# decoupleRBench
 Package to benchmark methods from decoupleR
