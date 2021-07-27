@@ -9,7 +9,7 @@
 #' @param .downsample_times downsampling iterations
 #' @inheritParams readRDS_helper
 #'
-#' @import tibble tidyr dplyr tidyselect
+#' @import tibble tidyr dplyr tidyselect purrr
 #'
 #' @seealso See \link{input_tibble} for a description of the params/columns
 #'   of .design (i.e. input tibble).
@@ -36,7 +36,7 @@ run_benchmark <- function(.design,
 
   res <- .design %>%
     format_design() %>%
-    mutate(activity = pmap(.l=.,
+    mutate(activity = purrr::pmap(.l=.,
                            .f=function(set_name, bench_name,
                                        stats_list, opts_list,
                                        bexpr_loc, bmeta_loc, source_loc,
