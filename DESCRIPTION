@@ -9,15 +9,15 @@ Authors@R:
         role = c("aut", "cre"),
         email = "daniel.dimitrov@uni-heidelberg.de",
         comment = c(ORCID = "0000-0002-5197-2112")
-    )
+	),
     person(
         given = "Pau",
         family = "Badia-i-Mompel",
         role = c("ctb", "cre"),
         email = "pau.badia@uni-heidelberg.de",
-        comment = c(ORCID = "0000-0002-1004-3923")),
-
-           )
+        comment = c(ORCID = "0000-0002-1004-3923")
+	)
+    )
 Description: Package to benchmark methods from decoupleR.
 License: use_mit_license()
 Encoding: UTF-8
