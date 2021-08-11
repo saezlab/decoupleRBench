@@ -10,7 +10,12 @@
 #'
 #' @details This is used to limit the number of times that any of the
 #' prerequsites is loaded.
+#' @export
 format_design <- function(.design){
+  if (!"noise_crit" %in% colnames(.design)){
+    .design <- .design %>%
+      add_column('noise_crit' = NA)
+  }
   .design %>%
     mutate(.source_bln = .data$source_loc %>% check_preced(),
            .expr_bln = .data$bexpr_loc %>% check_preced(),

@@ -35,31 +35,46 @@ run_benchmark <- function(.design,
   bench_env <- new.env()
 
   res <- .design %>%
-    format_design() %>%
-    mutate(activity = purrr::pmap(.l=.,
+    decoupleRBench::format_design() %>%
+    dplyr::mutate(activity = pmap(.l=.,
                            .f=function(set_name, bench_name,
                                        stats_list, opts_list,
                                        bexpr_loc, bmeta_loc, source_loc,
                                        source_col, target_col,
-                                       filter_col, filter_crit,
+                                       filter_col, filter_crit, noise_crit,
                                        .source_bln, .expr_bln, .meta_bln){
 
                              # Check prerequisites
                              if(!.expr_bln){
-                               bench_env$gene_expression <- readRDS_helper(bexpr_loc, .url_bool) %>%
+                               bench_env$gene_expression <- decoupleRBench::readRDS_helper(bexpr_loc, .url_bool) %>%
                                  as.matrix()
+                               message(stringr::str_glue("Expression loaded"))
                              }
                              if(!.meta_bln){
-                               bench_env$meta_data <- readRDS_helper(bmeta_loc, .url_bool)
-                             }
-                             if(!.source_bln){
-                               bench_env$set_source <- readRDS_helper(source_loc, .url_bool)
+                               bench_env$meta_data <- decoupleRBench::readRDS_helper(bmeta_loc, .url_bool)
+                               message(stringr::str_glue("Meta loaded"))
                              }
 
                              # Filter set_source/network
+                             bench_env$set_source <- decoupleRBench::readRDS_helper(source_loc, .url_bool)
                              ss_filtered <- filter_sets(bench_env$set_source, source_col,
                                                         filter_col, filter_crit,
                                                         .minsize, .silent)
+                             message(stringr::str_glue("Network loaded"))
+
+                             # Add noise
+                             if (is.list(noise_crit)){
+                               message(
+                                 stringr::str_glue("Modify network"))
+                               ss_filtered <- decoupleRBench::net_noise(
+                                 network = bench_env$set_source,
+                                 mode = noise_crit$mode,
+                                 perc = noise_crit$perc,
+                                 seed = noise_crit$seed
+                               )
+                               message(
+                                 stringr::str_glue("{noise_crit$mode} {noise_crit$perc} noise"))
+                             }
 
                              # Show Current Row/Run
                              if(!.silent){
@@ -71,12 +86,12 @@ run_benchmark <- function(.design,
 
                              # Obtain Activity with decouple and format
                              decoupleR::decouple(mat = bench_env$gene_expression, network = ss_filtered,
-                                      .source = source_col, .target = all_of(target_col),
+                                      .source = source_col, .target = tidyselect::all_of(target_col),
                                       statistics = stats_list, args = opts_list,
                                       include_time = TRUE)  %>%
                                dplyr::rename(id=.data$condition) %>%
-                               inner_join(bench_env$meta_data, by="id")  %>%
-                               group_split(.data$statistic, .keep=TRUE) %>%
+                               dplyr::inner_join(bench_env$meta_data, by="id")  %>%
+                               dplyr::group_split(.data$statistic, .keep=TRUE) %>%
                                as.list()
                            })) %>% {
                              if(.form & !.perform) bench_format(., .silent)

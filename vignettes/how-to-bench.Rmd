@@ -52,14 +52,17 @@ library(tibble)
 # We load the files directly from Zenodo urls
 # example expression data
 bexample_url <- "https://zenodo.org/record/4322914/files/dorothea_bench_example.rds?download=1"
+bexample_url <- '../../decoupleR_manuscript/data/dorothea_bench_expr.rds'
 # full benchmark expression data (not used for the vignette)
 # if you are interested in seeing the results with the whole data sets
 # please uncomment this line and replace bexample_url
 # bexpr_url = "https://zenodo.org/record/4322914/files/dorothea_bench_expr.rds?download=1"
 # benchmark metadata
 bmeta_url <- "https://zenodo.org/record/4322914/files/dorothea_bench_meta.rds?download=1"
+bmeta_url <- '../../decoupleR_manuscript/data/dorothea_bench_meta.rds'
 # dorothea gene sets
 source_url <- "https://zenodo.org/record/4322914/files/dorothea_filtered.rds?download=1"
+source_url <- '../../decoupleR_manuscript/data/dorothea_filtered.rds'
 ```
 
 ## Input tibble
@@ -226,7 +229,7 @@ dor_run <- run_benchmark(
     .downsample_pr = FALSE, # downsample TNs for precision-recall curve
     .downsample_roc = FALSE, # downsample TNs for ROC
     .downsample_times = 100, # downsampling iterations (not used here)
-    .url_bool = TRUE # whether to load from url
+    .url_bool = FALSE # whether to load from url
 )
 ```
 
