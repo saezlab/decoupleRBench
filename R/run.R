@@ -67,7 +67,7 @@ run_benchmark <- function(.design,
                                message(
                                  stringr::str_glue("Modify network"))
                                ss_filtered <- decoupleRBench::net_noise(
-                                 network = bench_env$set_source,
+                                 network = ss_filtered,
                                  mode = noise_crit$mode,
                                  perc = noise_crit$perc,
                                  seed = noise_crit$seed
@@ -75,6 +75,8 @@ run_benchmark <- function(.design,
                                message(
                                  stringr::str_glue("{noise_crit$mode} {noise_crit$perc} noise"))
                              }
+
+                             # TODO weight crit code
 
                              # Show Current Row/Run
                              if(!.silent){
