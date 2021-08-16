@@ -115,7 +115,11 @@ design_row <-
         source_col = "tf", # source name of the gene set source
         target_col = "target", # target name of the set source
         filter_col = "confidence", # column by which we wish to filter
-        filter_crit = list(c("A")) # criteria by which we wish to filter
+        filter_crit = list(c("A")), # criteria by which we wish to filter
+        weight_crit = list(list(
+          .mor = "mor",
+          .likelihood = "likelihood"
+        ))
     )
 
 # input tibble where each run/row filters according to different
@@ -229,7 +233,7 @@ dor_run <- run_benchmark(
     .downsample_pr = FALSE, # downsample TNs for precision-recall curve
     .downsample_roc = FALSE, # downsample TNs for ROC
     .downsample_times = 100, # downsampling iterations (not used here)
-    .url_bool = FALSE # whether to load from url
+    .url_bool = TRUE # whether to load from url
 )
 ```
 

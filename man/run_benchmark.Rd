@@ -17,9 +17,6 @@ run_benchmark(
 )
 }
 \arguments{
-\item{.design}{input tibble used to provide the experimental design for each
-benchmark run}
-
 \item{.form}{bool whether to format or not}
 
 \item{.perform}{bool whether to calculate ROC and performance summary}

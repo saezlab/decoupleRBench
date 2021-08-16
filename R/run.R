@@ -1,6 +1,5 @@
 #' Benchmark pipeline built on the statistical method wrapper \link{decouple}.
 #'
-#' @inheritParams format_design
 #' @param .form bool whether to format or not
 #' @param .perform bool whether to calculate ROC and performance summary
 #' @inheritParams filter_sets
@@ -14,7 +13,7 @@
 #' @seealso See \link{input_tibble} for a description of the params/columns
 #'   of .design (i.e. input tibble).
 #'
-#' @export
+#' @exportåç
 #'
 #' @importFrom rlang .data
 #' @importFrom stats reorder setNames
@@ -40,8 +39,8 @@ run_benchmark <- function(.design,
                            .f=function(set_name, bench_name,
                                        stats_list, opts_list,
                                        bexpr_loc, bmeta_loc, source_loc,
-                                       source_col, target_col,
-                                       filter_col, filter_crit, noise_crit,
+                                       source_col, target_col, filter_col,
+                                       filter_crit, noise_crit, weight_crit,
                                        .source_bln, .expr_bln, .meta_bln){
 
                              # Check prerequisites
@@ -76,7 +75,17 @@ run_benchmark <- function(.design,
                                  stringr::str_glue("{noise_crit$mode} {noise_crit$perc} noise"))
                              }
 
-                             # TODO weight crit code
+                             # Remove weight
+                             if (is.list(weight_crit)){
+                               message(
+                                 stringr::str_glue("Unweight network"))
+                               ss_filtered <- decoupleRBench::net_weight(
+                                 network = ss_filtered,
+                                 weight_rm = c(weight_crit$.mor, weight_crit$.likelihood)
+                               )
+                               message(
+                                 stringr::str_glue("{c(weight_crit$.mor, weight_crit$.likelihood)} set to 1 "))
+                             }
 
                              # Show Current Row/Run
                              if(!.silent){

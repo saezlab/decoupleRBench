@@ -16,6 +16,12 @@ format_design <- function(.design){
     .design <- .design %>%
       add_column('noise_crit' = NA)
   }
+
+  if (!"weight_crit" %in% colnames(.design)){
+    .design <- .design %>%
+      add_column('weight_crit' = NA)
+  }
+
   .design %>%
     mutate(.source_bln = .data$source_loc %>% check_preced(),
            .expr_bln = .data$bexpr_loc %>% check_preced(),
