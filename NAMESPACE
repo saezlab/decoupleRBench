@@ -3,6 +3,7 @@
 export(calc_curve)
 export(format_design)
 export(net_noise)
+export(net_weight)
 export(readRDS_helper)
 export(run_benchmark)
 exportClasses(BenchResult)

@@ -13,7 +13,7 @@
 #' @seealso See \link{input_tibble} for a description of the params/columns
 #'   of .design (i.e. input tibble).
 #'
-#' @export
+#' @exportåç
 #'
 #' @importFrom rlang .data
 #' @importFrom stats reorder setNames
@@ -84,7 +84,7 @@ run_benchmark <- function(.design,
                                  weight_rm = c(weight_crit$.mor, weight_crit$.likelihood)
                                )
                                message(
-                                 stringr::str_glue("{c(weight_crit$.mor, weight_crit$.likelihood)} set to 1"))
+                                 stringr::str_glue("{c(weight_crit$.mor, weight_crit$.likelihood)} set to 1 "))
                              }
 
                              # Show Current Row/Run
