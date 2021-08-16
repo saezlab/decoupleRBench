@@ -23,6 +23,7 @@ calc_curve = function(df,
                       times = 1000,
                       curve = "ROC",
                       seed = 420){
+  set.seed(seed)
 
   if(curve=="PR"){
     res_col_1 <- "precision"
@@ -54,7 +55,6 @@ calc_curve = function(df,
     num_tp = nrow(cp)
 
     res = map_df(seq(from=1, to=times, by=1), function(i) {
-      set.seed(seed)
       df_sub = sample_n(cn, num_tp, replace=TRUE) %>%
         bind_rows(cp)
 
@@ -77,7 +77,9 @@ calc_curve = function(df,
 
     })
     # Get Average AUC
-    res$auc <- sum(res$auc)/length(res$auc)
+    res <- res %>% dplyr::rename("raw_auc" = auc)
+    # auc is the mean of all iterations, raw_auc is the value per iteration
+    res$auc <- sum(res$raw_auc)/length(res$raw_auc)
     res$cn <- nrow(cp)
 
   } else {
