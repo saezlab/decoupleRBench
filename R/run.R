@@ -95,6 +95,12 @@ run_benchmark <- function(.design,
                                message(str_glue("Currently Running: {.curr_row}"))
                              }
 
+                             # Match target genes between network and mat
+                             ss_filtered <- decoupleR::intersect_regulons(
+                               mat = bench_env$gene_expression,
+                               network = ss_filtered,
+                               target = target_col
+                             )
                              # Obtain Activity with decouple and format
                              decoupleR::decouple(mat = bench_env$gene_expression, network = ss_filtered,
                                       .source = source_col, .target = tidyselect::all_of(target_col),
