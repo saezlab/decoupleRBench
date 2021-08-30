@@ -99,7 +99,8 @@ run_benchmark <- function(.design,
                              ss_filtered <- decoupleR::intersect_regulons(
                                mat = bench_env$gene_expression,
                                network = ss_filtered,
-                               target = target_col
+                               target = target_col,
+                               minsize = .minsize
                              )
                              # Obtain Activity with decouple and format
                              decoupleR::decouple(mat = bench_env$gene_expression, network = ss_filtered,
