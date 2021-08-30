@@ -14,18 +14,18 @@
 #' @import purrr
 #'
 #' @export
-net_noise <- function(network, mode='add', perc=0.1, tf='tf',
+net_noise <- function(network, mode='add', perc=0.1, source='tf',
                           target='target', seed=42){
   # Get unique targets of network
   targets <- unique(network[[target]])
 
   # For each TF, change % of edges
   network %>%
-    group_by(tf) %>%
+    group_by(!! sym(source)) %>%
     group_split() %>%
     map(function(df){
       # Name TF
-      tf <- df[[tf]][1]
+      tf <- df[[source]][1]
 
       # Number of genes
       n_genes <- ceiling(perc * nrow(df))
@@ -39,8 +39,14 @@ net_noise <- function(network, mode='add', perc=0.1, tf='tf',
         sampled <- sample(diff, n_genes, replace=F)
 
         # Append to df
-        tibble(tf=tf, target=sampled, mor=1, likelihood=1) %>%
-          bind_rows(df, .)
+        tbl <- tibble(
+          mor = rep(1, length(sampled)),
+          likelihood = rep(1, length(sampled))
+          )
+        tbl[[source]] <- rep(tf, length(sampled))
+        tbl[[target]] <- sampled
+        tbl <- bind_rows(df, tbl)
+        tbl
       } else if (mode == 'del') {
         # Sample n edges to del
         set.seed(seed)
@@ -48,12 +54,13 @@ net_noise <- function(network, mode='add', perc=0.1, tf='tf',
 
         # Delete rows with sampled genes
         df %>%
-          filter(!target %in% sampled)
+          filter(! (!!sym(target)) %in% sampled)
       } else {
         stop(stringr::str_glue(
           "{mode} is an invalid mode, please select 'add' or 'del'."))
       }
     }) %>%
-    bind_rows()
+    bind_rows() %>%
+    distinct(!! sym(source), !! sym(target), .keep_all=T)
 }
 

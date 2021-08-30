@@ -69,7 +69,9 @@ run_benchmark <- function(.design,
                                  network = ss_filtered,
                                  mode = noise_crit$mode,
                                  perc = noise_crit$perc,
-                                 seed = noise_crit$seed
+                                 seed = noise_crit$seed,
+                                 source = source_col,
+                                 target = target_col
                                )
                                message(
                                  stringr::str_glue("{noise_crit$mode} {noise_crit$perc} noise"))
