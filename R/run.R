@@ -13,7 +13,7 @@
 #' @seealso See \link{input_tibble} for a description of the params/columns
 #'   of .design (i.e. input tibble).
 #'
-#' @exportåç
+#' @export
 #'
 #' @importFrom rlang .data
 #' @importFrom stats reorder setNames

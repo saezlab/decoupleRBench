@@ -3,7 +3,7 @@
 #' @param .res_tibble formatted bench result tibble with roc and prc columns
 #' roc column: Reciever Operator Curve Results (calculated with yardstick)
 #' prc column: Precision-Recall Curve Results (calculated with yardstick)
-#' @return A summary list with TF coverage, ROC, AUROC, PRAUC, Run time,
+#' @return A summary list with source coverage, ROC, AUROC, PRAUC, Run time,
 #' ROC plots, and Heatmap plots
 #' @import ggplot2 pheatmap
 #' @importFrom rlang .data

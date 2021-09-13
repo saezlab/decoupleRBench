@@ -4,7 +4,7 @@
 #' @param network Network to modify.
 #' @param mode Whether to add ('add') or delete ('del') edges.
 #' @param perc Percentage of edges to modify per regulon.
-#' @param tf Network's TF column.
+#' @param source Network's source column.
 #' @param target Network's target genes column.
 #' @param seed An integer to set the RNG state for random number generation. Use
 #'    NULL for random number generation.
@@ -14,18 +14,18 @@
 #' @import purrr
 #'
 #' @export
-net_noise <- function(network, mode='add', perc=0.1, source='tf',
+net_noise <- function(network, mode='add', perc=0.1, source='source',
                           target='target', seed=42){
   # Get unique targets of network
   targets <- unique(network[[target]])
 
-  # For each TF, change % of edges
+  # For each source, change % of edges
   network %>%
     group_by(!! sym(source)) %>%
     group_split() %>%
     map(function(df){
-      # Name TF
-      tf <- df[[source]][1]
+      # Name source
+      name_source <- df[[source]][1]
 
       # Number of genes
       n_genes <- ceiling(perc * nrow(df))
@@ -43,7 +43,7 @@ net_noise <- function(network, mode='add', perc=0.1, source='tf',
           mor = rep(1, length(sampled)),
           likelihood = rep(1, length(sampled))
           )
-        tbl[[source]] <- rep(tf, length(sampled))
+        tbl[[source]] <- rep(name_source, length(sampled))
         tbl[[target]] <- sampled
         tbl <- bind_rows(df, tbl)
         tbl

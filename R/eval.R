@@ -49,7 +49,7 @@ calc_curve = function(df,
   cn = df %>% filter(.data$response == 0)
   cp = df %>% filter(.data$response == 1)
 
-  feature_coverage = length(unique(df$tf))
+  feature_coverage = length(unique(df$source))
 
   if (downsampling == TRUE) {
     num_tp = nrow(cp)
@@ -105,7 +105,7 @@ calc_curve = function(df,
 
 #' Helper function used to prepare `activity` elements or \link{decouple}
 #' outputs for \link{calc_curve}. This is done by keeping only the the perturbed
-#' or predicted `sources` (or TFs) and assigning the `score` (or statistical
+#' or predicted `sources` and assigning the `score` (or statistical
 #' method results e.g. Normalized Enrichment Score) as the `predictor`.
 #'
 #' @param df `activity` column elements - i.e. `decouple()` output.
@@ -117,16 +117,16 @@ calc_curve = function(df,
 #'   PR curve analysis
 prepare_for_roc = function(df, filter_tn = FALSE) {
   res = df %>%
-    dplyr::mutate(response = case_when(.data$tf == .data$target ~ 1,
-                                       .data$tf != .data$target ~ 0),
+    dplyr::mutate(response = case_when(.data$source == .data$target ~ 1,
+                                       .data$source != .data$target ~ 0),
                   predictor = abs(.data$score))#*sign)
   res$response = factor(res$response, levels = c(1, 0))
 
   if (filter_tn == TRUE) {
-    z = intersect(res$tf, res$target)
+    z = intersect(res$source, res$target)
     res = res %>%
-      filter(.data$tf %in% z, .data$target %in% z)
+      filter(.data$source %in% z, .data$target %in% z)
   }
   res %>%
-    select(.data$tf, .data$id, .data$response, .data$predictor)
+    select(.data$source, .data$id, .data$response, .data$predictor)
 }
