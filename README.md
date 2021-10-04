@@ -13,6 +13,12 @@ For more information, please check:
 - `decoupleR` repository: https://github.com/saezlab/decoupleR
 - Manuscript repository: https://github.com/saezlab/decoupleR_manuscript
 
+## Install
+To install `deocupleRBench` please run:
+```
+devtools::install_github('saezlab/decoupleRBench')
+```
+
 ## Evaluation
 For a given `decoupleR` method, activities are inferred for each regulator and 
 experiment. To evaluate their performance, all experiments are concatenated 
