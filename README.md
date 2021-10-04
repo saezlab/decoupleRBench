@@ -24,6 +24,9 @@ For a given `decoupleR` method, activities are inferred for each regulator and
 experiment. To evaluate their performance, all experiments are concatenated 
 together to generate a response vector (whether a regulator is perturbed or not)
 and a predictor vector (the regulator activities). Then, using different 
-thresholds we can calculate AUROC and AUPRC for each method. 
+thresholds we can calculate AUROC and AUPRC for each method. Given that the true 
+positive classes are limited by the regulators covered in the perturbation 
+experiments, we use a downsampling strategy, where for each permutation an 
+equal number of  negative classes are randomly sampled.
 
 
