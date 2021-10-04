@@ -33,13 +33,7 @@ This benchmark setting builds on `decoupleR`, and more specifically the
 installed and it is recommended that the user is familiar with the [basics of decoupleR](https://saezlab.github.io/decoupleR/articles/decoupleR.html#basics-1).
 
 The benchmark pipeline requires an input tibble with user-specified settings,
-benchmark data in the form of a count table and a corresponding metadata table
-with a priori knowledge of the perturbation experiments or conditions.
-
-The prerequisites used in this tutorial and information about them can be found 
-on [google drive](https://drive.google.com/drive/folders/1p6_9XXuCvArCREakkecSMa5E72aH3wAD)
-and [zenodo](https://zenodo.org/record/4322914/).
-
+benchmark data in the form of a count table and a corresponding metadata table.
 
 ```{r load_decoupler, include = TRUE}
 # load dependencies
@@ -49,20 +43,16 @@ library(pheatmap)
 library(dplyr)
 library(tibble)
 
-# We load the files directly from Zenodo urls
+# We load the files directly from drive urls
+
 # example expression data
-bexample_url <- "https://zenodo.org/record/4322914/files/dorothea_bench_example.rds?download=1"
-bexample_url <- '../../decoupleR_manuscript/data/dorothea_bench_expr.rds'
-# full benchmark expression data (not used for the vignette)
-# if you are interested in seeing the results with the whole data sets
-# please uncomment this line and replace bexample_url
-# bexpr_url = "https://zenodo.org/record/4322914/files/dorothea_bench_expr.rds?download=1"
+bexample_url <- 'https://docs.google.com/uc?export=download&id=1S9YcfQuG2cKLhUJKQjCtxtqdAvFbm9B9'
+
 # benchmark metadata
-bmeta_url <- "https://zenodo.org/record/4322914/files/dorothea_bench_meta.rds?download=1"
-bmeta_url <- '../../decoupleR_manuscript/data/dorothea_bench_meta.rds'
+bmeta_url <- "https://docs.google.com/uc?export=download&id=1nkvdtR0M1CvQPvFfz5OzJ75eicgE-0wu"
+
 # dorothea gene sets
-source_url <- "https://zenodo.org/record/4322914/files/dorothea_filtered.rds?download=1"
-source_url <- '../../decoupleR_manuscript/data/dorothea_filtered.rds'
+source_url <- "https://docs.google.com/uc?export=download&id=1CRrEcLxUqIp6qKyTIpF7Wuv1dZsiqe0j"
 ```
 
 ## Input tibble
@@ -79,9 +69,7 @@ statistical methods and their settings, different set sources/networks,
 and benchmark data sets.
 
 Note that here we use only an example of the DoRoThEA benchmarking set
-[(Holland et al., 2020)](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1949-z),
-to change this to the full benchmark data set, you only need to change 
-`bexpr_url` to point to the full benchmark expression data.
+[(Holland et al., 2020)](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1949-z).
 
 ```{r input_example}
 design_row <-
@@ -90,24 +78,17 @@ design_row <-
         bench_name = "dbd", # name of the benchmark data
         stats_list = list( # a list of the stats to call
             c(
-                "mean",
-                "pscira",
-                "scira",
-                "viper",
+                "wmean",
+                "mlm",
                 "gsva",
                 "ora"
             )
         ),
         opts_list = list(list( # list of options for each stat method
-            scira = list(.mor = "mor"),
-            pscira = list(.mor = "mor"),
-            mean = list(.mor = "mor"),
-            viper = list(verbose = FALSE,
-                         minsize = 0,
-                         .mor = "mor",
-                         .likelihood = "likelihood"),
+            wmean = list(times = 100, .mor='mor', .likelihood='likelihood'),
+            mlm = list(.mor='mor', .likelihood='likelihood'),
             gsva = list(verbose = FALSE, method = "gsva"),
-            ora = list()
+            ora = list(n_up = 300, n_bottom = 300, n_background = 20000)
         )),
         bexpr_loc = bexample_url, # benchmark data location
         bmeta_loc = bmeta_url, # metadata location
@@ -116,10 +97,6 @@ design_row <-
         target_col = "target", # target name of the set source
         filter_col = "confidence", # column by which we wish to filter
         filter_crit = list(c("A")), # criteria by which we wish to filter
-        weight_crit = list(list(
-          .mor = "mor",
-          .likelihood = "likelihood"
-        ))
     )
 
 # input tibble where each run/row filters according to different
@@ -127,10 +104,9 @@ design_row <-
 input_tibble <- bind_rows(
     design_row,
     design_row %>%
-        mutate(filter_crit = list(c("A", "B", "C"))),
-    design_row %>%
-        mutate(filter_crit = list(c("A", "B", "C", "D", "E")))
+        mutate(filter_crit = list(c("A", "B", "C")))
 )
+input_tibble <- input_tibble[2,]
 
 input_tibble %>%
     rmarkdown::paged_table()
@@ -226,13 +202,13 @@ of alternative source set performance methods.
 ```{r bench_run, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
 dor_run <- run_benchmark(
     .design = input_tibble, # provide input tibble
-    .minsize = 10, # filter gene sets with size < 10
+    .minsize = 5, # filter gene sets with size < 10
     .form = TRUE, # format the benchmark results
     .perform = TRUE, # evaluate benchmarking performance
-    .silent = TRUE, # silently run the pipeline
-    .downsample_pr = FALSE, # downsample TNs for precision-recall curve
-    .downsample_roc = FALSE, # downsample TNs for ROC
-    .downsample_times = 100, # downsampling iterations (not used here)
+    .silent = FALSE, # silently run the pipeline
+    .downsample_pr = TRUE, # downsample TNs for precision-recall curve
+    .downsample_roc = TRUE, # downsample TNs for ROC
+    .downsample_times = 100, # downsampling iterations
     .url_bool = TRUE # whether to load from url
 )
 ```
