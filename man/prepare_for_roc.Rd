@@ -4,7 +4,7 @@
 \alias{prepare_for_roc}
 \title{Helper function used to prepare \code{activity} elements or \link{decouple}
 outputs for \link{calc_curve}. This is done by keeping only the the perturbed
-or predicted \code{sources} (or TFs) and assigning the \code{score} (or statistical
+or predicted \code{sources} and assigning the \code{score} (or statistical
 method results e.g. Normalized Enrichment Score) as the \code{predictor}.}
 \usage{
 prepare_for_roc(df, filter_tn = FALSE)
@@ -23,6 +23,6 @@ PR curve analysis
 \description{
 Helper function used to prepare \code{activity} elements or \link{decouple}
 outputs for \link{calc_curve}. This is done by keeping only the the perturbed
-or predicted \code{sources} (or TFs) and assigning the \code{score} (or statistical
+or predicted \code{sources} and assigning the \code{score} (or statistical
 method results e.g. Normalized Enrichment Score) as the \code{predictor}.
 }

@@ -12,7 +12,7 @@ roc column: Reciever Operator Curve Results (calculated with yardstick)
 prc column: Precision-Recall Curve Results (calculated with yardstick)}
 }
 \value{
-A summary list with TF coverage, ROC, AUROC, PRAUC, Run time,
+A summary list with source coverage, ROC, AUROC, PRAUC, Run time,
 ROC plots, and Heatmap plots
 }
 \description{

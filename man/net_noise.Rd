@@ -9,7 +9,7 @@ net_noise(
   network,
   mode = "add",
   perc = 0.1,
-  tf = "tf",
+  source = "source",
   target = "target",
   seed = 42
 )
@@ -21,7 +21,7 @@ net_noise(
 
 \item{perc}{Percentage of edges to modify per regulon.}
 
-\item{tf}{Network's TF column.}
+\item{source}{Network's source column.}
 
 \item{target}{Network's target genes column.}
 
