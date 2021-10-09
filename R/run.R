@@ -98,13 +98,12 @@ run_benchmark <- function(.design,
                              }
 
                              # Match target genes between network and mat
-                             ss_filtered <- decoupleR::intersect_regulons(
-                               mat = bench_env$gene_expression,
-                               network = ss_filtered,
-                               .source = source_col,
-                               .target = target_col,
-                               minsize = .minsize
-                             )
+                             targets <- rownames(bench_env$gene_expression)
+                             msk <- ss_filtered[[target_col]] %in% targets
+                             ss_filtered <- ss_filtered[msk,]
+                             ss_filtered <- ss_filtered %>%
+                               group_by_at(source_col) %>%
+                               filter(n() >= .minsize)
                              # Obtain Activity with decouple and format
                              decoupleR::decouple(mat = bench_env$gene_expression, network = ss_filtered,
                                       .source = source_col, .target = tidyselect::all_of(target_col),
