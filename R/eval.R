@@ -115,6 +115,7 @@ calc_curve = function(df,
 #' @return tidy data frame with meta information for each experiment and the
 #'   response and the predictor value which are required for ROC and
 #'   PR curve analysis
+#' @export
 prepare_for_roc = function(df, filter_tn = FALSE) {
   res = df %>%
     dplyr::mutate(response = case_when(.data$source == .data$target ~ 1,

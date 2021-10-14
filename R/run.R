@@ -111,7 +111,8 @@ run_benchmark <- function(.design,
                                       include_time = TRUE)  %>%
                                dplyr::rename(id=.data$condition) %>%
                                dplyr::inner_join(bench_env$meta_data, by="id")  %>%
-                               dplyr::group_split(.data$statistic, .keep=TRUE) %>%
+                               dplyr::group_by(.data$statistic) %>%
+                               dplyr::group_split(.keep=TRUE) %>%
                                as.list()
                            })) %>% {
                              if(.form & !.perform) bench_format(., .silent)

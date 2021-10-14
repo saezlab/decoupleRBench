@@ -116,6 +116,7 @@ readRDS_helper <- function(file, .url_bool=FALSE, ...){
 #'
 #' @details If infinite values are present in the results, this function will
 #'   notify the user.
+#' @export
 bench_format <- function(.bench_res, .silent) {
   res_format <- .bench_res %>%
     unnest(.data$activity) %>%
