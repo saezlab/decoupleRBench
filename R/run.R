@@ -110,7 +110,8 @@ run_benchmark <- function(.design,
                                       statistics = stats_list, args = opts_list,
                                       include_time = TRUE)  %>%
                                dplyr::rename(id=.data$condition) %>%
-                               dplyr::inner_join(bench_env$meta_data, by="id")  %>%
+                               ungroup() %>%
+                               dplyr::left_join(bench_env$meta_data, by="id")  %>%
                                dplyr::group_by(.data$statistic) %>%
                                dplyr::group_split(.keep=TRUE) %>%
                                as.list()
