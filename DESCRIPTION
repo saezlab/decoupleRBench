@@ -1,6 +1,6 @@
 Package: decoupleRBench
 Title: Benchmark of decoupleR methods.
-Version: 0.0.3
+Version: 0.1.0
 Authors@R: 
     c(
     person(

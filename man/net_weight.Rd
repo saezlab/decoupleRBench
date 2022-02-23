@@ -4,12 +4,12 @@
 \alias{net_weight}
 \title{This function takes a network and removes weight and/or directionality of the network}
 \usage{
-net_weight(network, weight_rm = "likelihood")
+net_weight(network, weight_rm = "mor")
 }
 \arguments{
 \item{network}{Network to modify.}
 
-\item{weight_rm}{Columns from network specifying likelihood or directionality (e.g. 'likelihood', 'mor').}
+\item{weight_rm}{Columns from network specifying weights ('mor').}
 }
 \value{
 Modified network.

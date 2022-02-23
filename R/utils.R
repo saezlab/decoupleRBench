@@ -22,6 +22,16 @@ format_design <- function(.design){
       add_column('weight_crit' = NA)
   }
 
+  if (!"extra_name" %in% colnames(.design)){
+    .design <- .design %>%
+      add_column('extra_name' = NA)
+  }
+
+  if (!"consensus_crit" %in% colnames(.design)){
+    .design <- .design %>%
+      add_column('consensus_crit' = NA)
+  }
+
   .design %>%
     mutate(.source_bln = .data$source_loc %>% check_preced(),
            .expr_bln = .data$bexpr_loc %>% check_preced(),

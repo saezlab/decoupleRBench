@@ -40,8 +40,7 @@ net_noise <- function(network, mode='add', perc=0.1, source='source',
 
         # Append to df
         tbl <- tibble(
-          mor = rep(1, length(sampled)),
-          likelihood = rep(1, length(sampled))
+          mor = rep(1, length(sampled))
           )
         tbl[[source]] <- rep(name_source, length(sampled))
         tbl[[target]] <- sampled

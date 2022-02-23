@@ -8,7 +8,7 @@ run_benchmark(
   .design,
   .form = TRUE,
   .perform = TRUE,
-  .minsize = 10,
+  .minsize = 5,
   .silent = TRUE,
   .downsample_pr = FALSE,
   .downsample_roc = FALSE,
