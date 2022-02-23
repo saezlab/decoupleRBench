@@ -75,14 +75,17 @@ run_methods <- function(bench_env,
                                       message(
                                         stringr::str_glue("{weight_crit$.mor} set to 1 "))
                                     }
-                                    consensus_crit <- consensus_crit[[1]]
                                     if (!any(is.na(consensus_crit))){
                                       message(
                                         stringr::str_glue("Setting consensus criteria {consensus_crit}"))
                                       if (consensus_crit == 'None'){
+                                        message(
+                                          stringr::str_glue("No consensus will not run."))
                                         consensus_score <- FALSE
                                         consensus_stats <- NULL
                                       } else{
+                                        message(
+                                          stringr::str_glue("Consensus will run."))
                                         consensus_score <- TRUE
                                         consensus_stats <- consensus_crit
                                       }
