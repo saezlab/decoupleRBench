@@ -120,7 +120,7 @@ prepare_for_roc = function(df, filter_tn = FALSE) {
   res = df %>%
     dplyr::mutate(response = case_when(.data$source == .data$target ~ 1,
                                        .data$source != .data$target ~ 0),
-                  predictor = abs(.data$score)) #* sign)
+                  predictor = .data$score * sign)
   res$response = factor(res$response, levels = c(1, 0))
 
   if (filter_tn == TRUE) {
