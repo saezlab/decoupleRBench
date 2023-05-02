@@ -14,7 +14,7 @@ For more information, please check:
 - Manuscript repository: https://github.com/saezlab/decoupleR_manuscript
 
 ## Install
-To install `deocupleRBench` please run:
+To install `decoupleRBench` please run:
 ```
 devtools::install_github('saezlab/decoupleRBench')
 ```
